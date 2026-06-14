@@ -1,0 +1,52 @@
+name: CI & Publish to GitHub Pages
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate HTML & CSS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install html5validator
+        run: pip install html5validator
+      # CSS errors are filtered: the vnu CSS parser rejects valid modern CSS
+      # (backdrop-filter, var() in background shorthand)
+      - name: Validate
+        run: html5validator --root . --ignore-re 'CSS:' --log INFO
+
+  publish:
+    name: Publish public/ to gh-pages
+    needs: validate
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Pages está em modo "branch" (gh-pages). Sincroniza public/ para a branch
+      # gh-pages usando apenas o GITHUB_TOKEN interno — sem nenhum secret externo.
+      # Serve em github.io e, quando public/CNAME existir, no domínio próprio
+      # war.ribeiroetigre.org (cutover descrito no README).
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+          enable_jekyll: false
+          commit_message: "Publish ${{ github.sha }} to GitHub Pages"
