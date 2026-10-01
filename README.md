@@ -31,8 +31,21 @@ Site 100% estático — HTML/CSS/JS puro, sem build, sem framework, servido via 
 | `public/CNAME` | Domínio próprio para o TLS do GitHub Pages |
 | `public/robots.txt` · `public/sitemap.xml` | Indexação explícita em `advocaciaproativa.com.br` |
 | `public/assets/favicon.svg` | Ícone |
+| `public/assets/og-card.jpg` | Card de compartilhamento 1200×630 (Open Graph / Twitter) |
+| `public/assets/logo-512.png` | Logo quadrado para o campo `logo` do JSON-LD |
 
 CTA principal: `mailto:contato@advocaciaproativa.com.br`, com assunto e corpo pré-preenchidos (inclui aviso de não enviar dados sensíveis de assistidos por e-mail).
+
+## Preview social (Open Graph)
+
+`og-card.jpg` é gerado a partir de HTML renderizado em Chromium headless a 1200×630 — fonte em `scratchpad/og-card.html` do histórico da sessão; para regerar, renderize o HTML no mesmo viewport e exporte JPEG q92.
+
+Dois cuidados ao trocar a arte:
+
+1. **As plataformas fazem cache do Open Graph.** Trocar o conteúdo do arquivo mantendo o nome não atualiza previews já vistos. Publique com nome novo (`og-card-2.jpg`) ou force o rescrape em [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) e [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/).
+2. **Peso.** O WhatsApp deixa de renderizar preview em arquivos grandes; manter abaixo de ~300 KB (o atual tem ~68 KB).
+
+As URLs em `og:image` precisam ser **absolutas** — caminho relativo é ignorado em silêncio por Facebook e LinkedIn.
 
 ## Cutover DNS (Registro.br)
 
