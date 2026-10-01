@@ -22,6 +22,18 @@ Site 100% estático — HTML/CSS/JS puro, sem build, sem framework, servido via 
 1. **Validate HTML & CSS** com `html5validator` (vnu/W3C) em todo push e pull request.
 2. **Publish public/ to gh-pages** quando o push é para `master` (não para PRs).
 
+## Superfície publicada
+
+| Arquivo | Função |
+|---|---|
+| `public/index.html` | Página única (hero → problema → solução → módulos → fluxo 0–10 → LGPD → evidências → piloto → FAQ → CTA) |
+| `public/styles.css` · `public/main.js` | Estilo e interações (menu móvel, acordeão, reveal) — sem dependências |
+| `public/CNAME` | Domínio próprio para o TLS do GitHub Pages |
+| `public/robots.txt` · `public/sitemap.xml` | Indexação explícita em `advocaciaproativa.com.br` |
+| `public/assets/favicon.svg` | Ícone |
+
+CTA principal: `mailto:contato@advocaciaproativa.com.br`, com assunto e corpo pré-preenchidos (inclui aviso de não enviar dados sensíveis de assistidos por e-mail).
+
 ## Cutover DNS (Registro.br)
 
 ```
@@ -35,7 +47,11 @@ O arquivo `public/CNAME` instrui o GitHub Pages a emitir certificado TLS para `a
 
 ## Identidade institucional
 
-NAVY `#0B1E3F` · GOLD `#B08D2E` · padrão visual unificado com Ribeiro & Tigre. Marca d'água `NEXUM` reservada para peças jurídicas geradas pelo Engine TIER 0 (skill `nexum-tier-0` v1.5.0).
+Esta superfície pública usa a paleta **teal institucional** — TEAL `#0E4F4A` (primária) · TEAL claro `#6FC2B8` (acento) · ARGILA `#B45B27` (reservada ao aviso LGPD) sobre neutros quentes `#F6F4EF`/`#FCFBF8`. Tipografia: Zodiak (display) + General Sans (texto), via Fontshare.
+
+> A paleta NAVY `#0B1E3F` · GOLD `#B08D2E` é a da **banca institucional** (`supreme-drafter` / war.ribeiroetigre.org) e não se aplica aqui: o NEXUM Público é deliberadamente distinto, com leitura de serviço público em vez de advocacia privada.
+
+Marca d'água `NEXUM` reservada para peças jurídicas geradas pelo Engine TIER 0 (skill `nexum-tier-0` v1.5.0).
 
 ## Licença e governança
 

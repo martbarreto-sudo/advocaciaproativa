@@ -40,8 +40,8 @@ jobs:
         uses: actions/checkout@v4
       # Pages está em modo "branch" (gh-pages). Sincroniza public/ para a branch
       # gh-pages usando apenas o GITHUB_TOKEN interno — sem nenhum secret externo.
-      # Serve em github.io e, quando public/CNAME existir, no domínio próprio
-      # war.ribeiroetigre.org (cutover descrito no README).
+      # Serve em github.io e, via public/CNAME, no domínio próprio
+      # advocaciaproativa.com.br (cutover descrito no README).
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
