@@ -100,9 +100,10 @@ em { font-style: italic; color: var(--ink-soft); }
 .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 8px; cursor: pointer; }
 .nav-toggle span { width: 24px; height: 2px; background: var(--ink); border-radius: 2px; transition: .2s; }
 
-.mobile-menu { display: none; flex-direction: column; gap: .25rem; padding: 1rem clamp(1.2rem,4vw,2.5rem) 1.5rem; background: var(--surface); border-bottom: 1px solid var(--border); }
+.mobile-menu { display: flex; flex-direction: column; gap: .25rem; padding: 1rem clamp(1.2rem,4vw,2.5rem) 1.5rem; background: var(--surface); border-bottom: 1px solid var(--border); }
 .mobile-menu a { padding: .6rem 0; color: var(--ink-soft); font-weight: 500; border-bottom: 1px solid var(--border); }
 .mobile-menu a:last-child { border-bottom: none; margin-top: .6rem; }
+.mobile-menu[hidden] { display: none; }
 
 /* ---------- Hero ---------- */
 .hero { padding: clamp(3.5rem, 7vw, 6rem) 0 clamp(3rem,6vw,5rem); position: relative; overflow: hidden; }
@@ -163,7 +164,7 @@ em { font-style: italic; color: var(--ink-soft); }
 .section-dark .eyebrow { color: #6FC2B8; }
 .section-dark h2, .section-dark h3 { color: #F2F6F4; }
 .section-dark .section-intro { color: #B7C6C2; }
-.flow-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: .9rem; counter-reset: none; }
+.flow-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: .9rem; }
 .flow-step { display: grid; grid-template-columns: auto 1fr; gap: 1rem; background: var(--dark-tint); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius-sm); padding: 1.15rem 1.25rem; align-items: start; }
 .flow-num { font-family: var(--font-display); font-size: 1.45rem; font-weight: 600; color: #6FC2B8; min-width: 1.6ch; }
 .flow-step h3 { font-size: 1.05rem; margin-bottom: .25rem; }
@@ -234,6 +235,9 @@ em { font-style: italic; color: var(--ink-soft); }
 }
 
 /* ---------- Responsive ---------- */
+@media (min-width: 921px) {
+  .mobile-menu { display: none; }
+}
 @media (max-width: 920px) {
   .nav-links { display: none; }
   .nav-cta { display: none; }
