@@ -4,26 +4,35 @@
   'use strict';
 
   // ---- Mobile menu ----
+  // A visibilidade é decidida pelo CSS a partir do atributo [hidden]; o JS não
+  // escreve style inline, senão o menu sobrevive ao retorno para o desktop.
   var toggle = document.querySelector('.nav-toggle');
   var menu = document.getElementById('mobile-menu');
+
+  function setMenu(open) {
+    menu.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+  }
+
   if (toggle && menu) {
     toggle.addEventListener('click', function () {
-      var open = menu.hidden;
-      menu.hidden = !open;
-      menu.style.display = open ? 'flex' : 'none';
-      toggle.setAttribute('aria-expanded', String(open));
+      setMenu(menu.hidden);
     });
     menu.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        menu.hidden = true;
-        menu.style.display = 'none';
-        toggle.setAttribute('aria-expanded', 'false');
-      });
+      link.addEventListener('click', function () { setMenu(false); });
     });
   }
 
   // ---- Accordion (FAQ) ----
-  document.querySelectorAll('.acc-trigger').forEach(function (btn) {
+  var triggers = document.querySelectorAll('.acc-trigger');
+
+  function openPanel(btn) {
+    var panel = btn.nextElementSibling;
+    panel.style.maxHeight = panel.scrollHeight + 'px';
+  }
+
+  triggers.forEach(function (btn) {
     var panel = btn.nextElementSibling;
     btn.addEventListener('click', function () {
       var expanded = btn.getAttribute('aria-expanded') === 'true';
@@ -31,10 +40,30 @@
       if (expanded) {
         panel.style.maxHeight = null;
       } else {
-        panel.style.maxHeight = panel.scrollHeight + 'px';
+        openPanel(btn);
       }
     });
   });
+
+  // max-height é fixado em px: sem recalcular, a resposta aberta fica cortada
+  // ao girar o telefone ou quando a fonte web termina de carregar.
+  function remeasureOpenPanels() {
+    triggers.forEach(function (btn) {
+      if (btn.getAttribute('aria-expanded') === 'true') {
+        btn.nextElementSibling.style.maxHeight = 'none';
+        openPanel(btn);
+      }
+    });
+  }
+
+  var remeasureTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(remeasureTimer);
+    remeasureTimer = setTimeout(remeasureOpenPanels, 120);
+  });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(remeasureOpenPanels);
+  }
 
   // ---- Reveal on scroll ----
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
