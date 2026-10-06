@@ -31,7 +31,9 @@ jobs:
   publish:
     name: Publish public/ to gh-pages
     needs: validate
-    if: github.event_name != 'pull_request'
+    # Só a branch padrão publica: workflow_dispatch numa branch qualquer não pode
+    # sobrescrever o site no ar.
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     permissions:
       contents: write

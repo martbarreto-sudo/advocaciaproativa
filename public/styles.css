@@ -36,6 +36,9 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+/* O cabeçalho é sticky (72px + borda): sem esta margem, o salto para uma âncora
+   (menu, skip-link) deixa o topo da seção escondido sob ele. */
+section[id], main[id] { scroll-margin-top: 80px; }
 
 body {
   margin: 0;
